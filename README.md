@@ -1,12 +1,10 @@
-# React File Preview
+# React File Preview [![npm version](https://img.shields.io/npm/v/react-file-preview.svg)](https://www.npmjs.com/package/react-file-preview)[![license](https://img.shields.io/npm/l/react-file-preview.svg)](https://github.com/wh131462/react-file-preview/blob/master/LICENSE)[![downloads](https://img.shields.io/npm/dm/react-file-preview.svg)](https://www.npmjs.com/package/react-file-preview)
 
 English | [简体中文](./README.zh-CN.md)
 
 A modern, feature-rich file preview component for React with support for images, videos, audio, PDFs, Office documents, Markdown, and code files.
 
-[![npm version](https://img.shields.io/npm/v/react-file-preview.svg)](https://www.npmjs.com/package/react-file-preview)
-[![license](https://img.shields.io/npm/l/react-file-preview.svg)](https://github.com/wh131462/react-file-preview/blob/main/LICENSE)
-[![downloads](https://img.shields.io/npm/dm/react-file-preview.svg)](https://www.npmjs.com/package/react-file-preview)
+
 
 ## ✨ Features
 

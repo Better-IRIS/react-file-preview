@@ -1,12 +1,8 @@
-# React File Preview
+# React File Preview [![npm version](https://img.shields.io/npm/v/react-file-preview.svg)](https://www.npmjs.com/package/react-file-preview)[![license](https://img.shields.io/npm/l/react-file-preview.svg)](https://github.com/wh131462/react-file-preview/blob/master/LICENSE)[![downloads](https://img.shields.io/npm/dm/react-file-preview.svg)](https://www.npmjs.com/package/react-file-preview)
 
 [English](./README.md) | 简体中文
 
 一个现代化、功能丰富的 React 文件预览组件,支持图片、视频、音频、PDF、Office 文档、Markdown 和代码文件预览。
-
-[![npm version](https://img.shields.io/npm/v/react-file-preview.svg)](https://www.npmjs.com/package/react-file-preview)
-[![license](https://img.shields.io/npm/l/react-file-preview.svg)](https://github.com/wh131462/react-file-preview/blob/main/LICENSE)
-[![downloads](https://img.shields.io/npm/dm/react-file-preview.svg)](https://www.npmjs.com/package/react-file-preview)
 
 ## ✨ 特性
 
