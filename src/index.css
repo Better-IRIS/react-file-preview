@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* PDF 渲染样式优化 */
+.react-pdf__Page {
+  max-width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.react-pdf__Page__canvas {
+  max-width: 100%;
+  height: auto !important;
+  border-radius: 8px;
+  display: block;
+}
+
+.react-pdf__Page__textContent {
+  border-radius: 8px;
+}
+
+.react-pdf__Page__annotations {
+  border-radius: 8px;
+}
+
+/* 平滑滚动 */
+.react-pdf__Document {
+  scroll-behavior: smooth;
+}
+
+/* 自定义滑块样式 */
+input[type="range"].slider {
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+input[type="range"].slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgb(168, 85, 247);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.5);
+  transition: all 0.2s ease;
+}
+
+input[type="range"].slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.7);
+}
+
+input[type="range"].slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgb(168, 85, 247);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.5);
+  transition: all 0.2s ease;
+}
+
+input[type="range"].slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.7);
+}
+
+/* Video.js Apple 主题样式 */
+.vjs-theme-apple {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.vjs-theme-apple .vjs-control-bar {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  margin: 0 12px 12px 12px;
+  height: 3.5em;
+}
+
+.vjs-theme-apple .vjs-big-play-button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.vjs-theme-apple .vjs-big-play-button:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.vjs-theme-apple .vjs-big-play-button .vjs-icon-placeholder:before {
+  color: #000;
+  font-size: 2em;
+}
+
+.vjs-theme-apple .vjs-progress-control .vjs-progress-holder {
+  height: 4px;
+  border-radius: 2px;
+}
+
+.vjs-theme-apple .vjs-play-progress {
+  background: linear-gradient(to right, rgb(168, 85, 247), rgb(236, 72, 153));
+  border-radius: 2px;
+}
+
+.vjs-theme-apple .vjs-load-progress {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.vjs-theme-apple .vjs-slider {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.vjs-theme-apple .vjs-volume-level {
+  background: linear-gradient(to right, rgb(168, 85, 247), rgb(236, 72, 153));
+  border-radius: 2px;
+}
+
+.vjs-theme-apple .vjs-button > .vjs-icon-placeholder:before {
+  line-height: 3.5em;
+}
+
+.vjs-theme-apple .vjs-time-control {
+  line-height: 3.5em;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.vjs-theme-apple .vjs-remaining-time {
+  display: none;
+}
