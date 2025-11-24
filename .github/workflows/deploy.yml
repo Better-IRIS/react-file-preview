@@ -17,9 +17,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '23'
-
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
       - name: Configure Git for GitHub Actions
         run: |
           git config --global user.name "GitHub Actions"
