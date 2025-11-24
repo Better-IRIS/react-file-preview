@@ -133,18 +133,27 @@ export const AudioRenderer: React.FC<AudioRendererProps> = ({ url, fileName }) =
       <div className="w-full max-w-md bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
         {/* 进度条 */}
         <div className="mb-4">
-          <input
-            type="range"
-            min="0"
-            max={duration > 0 ? duration : 100}
-            value={currentTime}
-            onChange={handleSeek}
-            className="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer slider"
-            style={{
-              background: `linear-gradient(to right, rgb(168, 85, 247) 0%, rgb(168, 85, 247) ${duration > 0 ? (currentTime / duration) * 100 : 0}%, rgba(255,255,255,0.2) ${duration > 0 ? (currentTime / duration) * 100 : 0}%, rgba(255,255,255,0.2) 100%)`
-            }}
-          />
-          <div className="flex justify-between text-xs text-white/60 mt-2">
+          <div className="relative h-4 flex items-center">
+            {/* 进度条背景轨道 */}
+            <div className="absolute w-full h-[6px] bg-white/20 rounded-full" />
+            {/* 已播放进度覆盖层 */}
+            <div
+              className="absolute h-[6px] bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-100 ease-linear pointer-events-none"
+              style={{
+                width: `${duration > 0 ? (currentTime / duration) * 100 : (currentTime > 100 ? 100 : currentTime)}%`
+              }}
+            />
+            {/* 进度条滑块 */}
+            <input
+              type="range"
+              min="0"
+              max={duration > 0 ? duration : 100 + (currentTime > 100 ? currentTime % 100 : 0)}
+              value={currentTime}
+              onChange={handleSeek}
+              className="audio-slider absolute w-full"
+            />
+          </div>
+          <div className="flex justify-between text-xs text-white/60 mt-3">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
@@ -182,18 +191,27 @@ export const AudioRenderer: React.FC<AudioRendererProps> = ({ url, fileName }) =
           >
             {isMuted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
           </button>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={isMuted ? 0 : volume}
-            onChange={handleVolumeChange}
-            className="flex-1 h-1 bg-white/20 rounded-lg appearance-none cursor-pointer slider"
-            style={{
-              background: `linear-gradient(to right, rgb(168, 85, 247) 0%, rgb(168, 85, 247) ${(isMuted ? 0 : volume) * 100}%, rgba(255,255,255,0.2) ${(isMuted ? 0 : volume) * 100}%, rgba(255,255,255,0.2) 100%)`
-            }}
-          />
+          <div className="flex-1 relative h-3 flex items-center">
+            {/* 音量条背景轨道 */}
+            <div className="absolute w-full h-[4px] bg-white/20 rounded-full" />
+            {/* 音量覆盖层 */}
+            <div
+              className="absolute h-[4px] bg-purple-500 rounded-full transition-all duration-100 pointer-events-none"
+              style={{
+                width: `${(isMuted ? 0 : volume) * 100}%`
+              }}
+            />
+            {/* 音量滑块 */}
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={isMuted ? 0 : volume}
+              onChange={handleVolumeChange}
+              className="volume-slider absolute w-full"
+            />
+          </div>
         </div>
       </div>
 
