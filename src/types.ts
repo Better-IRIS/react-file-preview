@@ -1,3 +1,13 @@
+// 链接对象类型
+export interface PreviewFileLink {
+  id?: string;
+  name: string;
+  url: string;
+  type: string;
+  size?: number;
+}
+
+// 内部使用的标准化文件类型
 export interface PreviewFile {
   id: string;
   name: string;
@@ -6,11 +16,15 @@ export interface PreviewFile {
   size?: number;
 }
 
+// 支持 File 对象、链接对象或 HTTP URL 字符串
+export type PreviewFileInput = File | PreviewFileLink | string;
+
 export type FileType =
   | 'image'
   | 'pdf'
   | 'docx'
   | 'xlsx'
+  | 'pptx'
   | 'video'
   | 'audio'
   | 'markdown'

@@ -1,7 +1,7 @@
 {
   "name": "react-file-preview",
   "version": "1.0.0",
-  "description": "A modern, feature-rich file preview component for React with support for images, videos, audio, PDFs, Office documents, Markdown, and code files.",
+  "description": "A modern, feature-rich file preview component for React with support for images, videos, audio, PDFs, Office documents (Word, Excel, PowerPoint), Markdown, and code files.",
   "type": "module",
   "keywords": [
     "react",
@@ -11,6 +11,12 @@
     "video-player",
     "audio-player",
     "document-viewer",
+    "office-viewer",
+    "ppt-viewer",
+    "pptx-viewer",
+    "powerpoint-viewer",
+    "word-viewer",
+    "excel-viewer",
     "markdown-viewer",
     "code-viewer"
   ],
@@ -49,6 +55,7 @@
     "lucide-react": "^0.460.0",
     "mammoth": "^1.8.0",
     "pdfjs-dist": "4.8.69",
+    "pptx-preview": "^1.0.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^10.1.0",

@@ -2,7 +2,7 @@
 
 [English](./README.md) | 简体中文
 
-一个现代化、功能丰富的 React 文件预览组件,支持图片、视频、音频、PDF、Office 文档、Markdown 和代码文件预览。
+一个现代化、功能丰富的 React 文件预览组件,支持图片、视频、音频、PDF、Office 文档(Word、Excel、PowerPoint)、Markdown 和代码文件预览。
 
 ## ✨ 特性
 
@@ -12,6 +12,7 @@
 - 🎬 **自定义视频播放器** - 基于 Video.js,支持多种视频格式
 - 🎵 **自定义音频播放器** - 精美的音频控制界面
 - 📄 **PDF 查看器** - 支持分页浏览
+- 📊 **Office 文档支持** - Word、Excel、PowerPoint 文件预览
 - 📝 **Markdown 渲染** - 支持 GitHub Flavored Markdown
 - 💻 **代码高亮** - 支持 40+ 种编程语言
 - 🎭 **流畅动画** - 基于 Framer Motion
@@ -73,6 +74,59 @@ function App() {
 }
 ```
 
+## 💡 使用示例
+
+### 预览 PowerPoint 文件
+
+```tsx
+import { FilePreviewModal } from 'react-file-preview';
+import { useState } from 'react';
+
+function PptPreview() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const pptFile = {
+    name: 'presentation.pptx',
+    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    url: '/path/to/your/presentation.pptx',
+  };
+
+  return (
+    <>
+      <button onClick={() => setIsOpen(true)}>
+        预览 PPT
+      </button>
+
+      <FilePreviewModal
+        files={[pptFile]}
+        currentIndex={0}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
+    </>
+  );
+}
+```
+
+### 预览多个文件
+
+```tsx
+const files = [
+  { name: 'image.jpg', type: 'image/jpeg', url: '/path/to/image.jpg' },
+  { name: 'document.pdf', type: 'application/pdf', url: '/path/to/document.pdf' },
+  { name: 'presentation.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation', url: '/path/to/presentation.pptx' },
+  { name: 'spreadsheet.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', url: '/path/to/spreadsheet.xlsx' },
+];
+
+<FilePreviewModal
+  files={files}
+  currentIndex={0}
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+  onNavigate={setCurrentIndex}
+/>
+```
+
 ## 📖 支持的文件格式
 
 ### 图片
@@ -91,6 +145,7 @@ function App() {
 - **PDF**: 分页浏览、缩放
 - **Word**: DOCX 格式支持
 - **Excel**: XLSX 格式支持
+- **PowerPoint**: PPTX/PPT 格式支持、幻灯片预览
 
 ### 代码 & 文本
 - **Markdown**: GitHub Flavored Markdown,代码高亮
@@ -103,21 +158,83 @@ function App() {
 
 | 属性 | 类型 | 必填 | 说明 |
 |------|------|------|------|
-| `files` | `PreviewFile[]` | ✅ | 文件列表 |
+| `files` | `PreviewFileInput[]` | ✅ | 文件列表（支持 File 对象、文件对象或 URL 字符串） |
 | `currentIndex` | `number` | ✅ | 当前文件索引 |
 | `isOpen` | `boolean` | ✅ | 是否打开预览 |
 | `onClose` | `() => void` | ✅ | 关闭回调 |
 | `onNavigate` | `(index: number) => void` | ❌ | 导航回调 |
 
-### PreviewFile 类型
+### 文件类型定义
 
 ```typescript
-interface PreviewFile {
+// 支持三种文件输入类型
+type PreviewFileInput = File | PreviewFileLink | string;
+
+// 1. 原生 File 对象（浏览器 File API）
+const file: File = ...;
+
+// 2. 文件对象
+interface PreviewFileLink {
+  id?: string;       // 可选的唯一标识符
   name: string;      // 文件名
   type: string;      // MIME 类型
-  url: string;       // 文件 URL (支持 blob URL)
+  url: string;       // 文件 URL (支持 blob URL 和 HTTP URL)
+  size?: number;     // 文件大小（字节）
 }
+
+// 3. HTTP URL 字符串
+const url: string = 'https://example.com/file.pdf';
 ```
+
+### 使用示例
+
+```typescript
+// 方式 1: 使用原生 File 对象
+const files = [file1, file2]; // File 对象数组
+
+// 方式 2: 使用 HTTP URL 字符串
+const files = [
+  'https://example.com/image.jpg',
+  'https://example.com/document.pdf',
+];
+
+// 方式 3: 使用文件对象
+const files = [
+  {
+    name: 'presentation.pptx',
+    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    url: '/path/to/presentation.pptx',
+  },
+];
+
+// 方式 4: 混合使用
+const files = [
+  file1,  // File 对象
+  'https://example.com/image.jpg',  // URL 字符串
+  { name: 'doc.pdf', type: 'application/pdf', url: '/doc.pdf' },  // 文件对象
+];
+```
+
+### 支持的 MIME 类型
+
+#### Office 文档
+- **Word**: `application/vnd.openxmlformats-officedocument.wordprocessingml.document` (.docx)
+- **Excel**: `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` (.xlsx)
+- **PowerPoint**: `application/vnd.openxmlformats-officedocument.presentationml.presentation` (.pptx)
+- **PowerPoint (旧版)**: `application/vnd.ms-powerpoint` (.ppt)
+
+#### 其他文档
+- **PDF**: `application/pdf`
+
+#### 媒体文件
+- **图片**: `image/jpeg`, `image/png`, `image/gif`, `image/webp`, `image/svg+xml`, 等
+- **视频**: `video/mp4`, `video/webm`, `video/ogg`, 等
+- **音频**: `audio/mpeg`, `audio/wav`, `audio/ogg`, 等
+
+#### 文本文件
+- **Markdown**: 文件扩展名 `.md` 或 `.markdown`
+- **代码**: 根据文件扩展名自动识别 (`.js`, `.ts`, `.py`, `.java`, 等)
+- **纯文本**: `text/plain`, `text/csv`, 等
 
 ## 🎨 自定义样式
 

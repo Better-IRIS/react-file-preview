@@ -2,7 +2,7 @@
 
 English | [简体中文](./README.zh-CN.md)
 
-A modern, feature-rich file preview component for React with support for images, videos, audio, PDFs, Office documents, Markdown, and code files.
+A modern, feature-rich file preview component for React with support for images, videos, audio, PDFs, Office documents (Word, Excel, PowerPoint), Markdown, and code files.
 
 
 
@@ -14,10 +14,11 @@ A modern, feature-rich file preview component for React with support for images,
 - 🎬 **Custom Video Player** - Built on Video.js, supports multiple video formats
 - 🎵 **Custom Audio Player** - Beautiful audio control interface
 - 📄 **PDF Viewer** - Pagination support
+- 📊 **Office Documents Support** - Word, Excel, PowerPoint file preview
 - 📝 **Markdown Rendering** - GitHub Flavored Markdown support
 - 💻 **Code Highlighting** - Supports 40+ programming languages
 - 🎭 **Smooth Animations** - Powered by Framer Motion
-- �� **Responsive Design** - Adapts to all screen sizes
+- 📱 **Responsive Design** - Adapts to all screen sizes
 - ⌨️ **Keyboard Navigation** - Arrow keys and ESC support
 - 🎯 **Drag & Drop** - File upload via drag and drop
 
@@ -75,6 +76,59 @@ function App() {
 }
 ```
 
+## 💡 Usage Examples
+
+### Preview PowerPoint Files
+
+```tsx
+import { FilePreviewModal } from 'react-file-preview';
+import { useState } from 'react';
+
+function PptPreview() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const pptFile = {
+    name: 'presentation.pptx',
+    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    url: '/path/to/your/presentation.pptx',
+  };
+
+  return (
+    <>
+      <button onClick={() => setIsOpen(true)}>
+        Preview PPT
+      </button>
+
+      <FilePreviewModal
+        files={[pptFile]}
+        currentIndex={0}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
+    </>
+  );
+}
+```
+
+### Preview Multiple Files
+
+```tsx
+const files = [
+  { name: 'image.jpg', type: 'image/jpeg', url: '/path/to/image.jpg' },
+  { name: 'document.pdf', type: 'application/pdf', url: '/path/to/document.pdf' },
+  { name: 'presentation.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation', url: '/path/to/presentation.pptx' },
+  { name: 'spreadsheet.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', url: '/path/to/spreadsheet.xlsx' },
+];
+
+<FilePreviewModal
+  files={files}
+  currentIndex={0}
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
+  onNavigate={setCurrentIndex}
+/>
+```
+
 ## 📖 Supported File Formats
 
 ### Images
@@ -93,6 +147,7 @@ function App() {
 - **PDF**: Pagination, zoom
 - **Word**: DOCX format support
 - **Excel**: XLSX format support
+- **PowerPoint**: PPTX/PPT format support, slide preview
 
 ### Code & Text
 - **Markdown**: GitHub Flavored Markdown, code highlighting
@@ -105,21 +160,83 @@ function App() {
 
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
-| `files` | `PreviewFile[]` | ✅ | Array of files to preview |
+| `files` | `PreviewFileInput[]` | ✅ | Array of files (supports File objects, file objects, or URL strings) |
 | `currentIndex` | `number` | ✅ | Current file index |
 | `isOpen` | `boolean` | ✅ | Whether the modal is open |
 | `onClose` | `() => void` | ✅ | Close callback |
 | `onNavigate` | `(index: number) => void` | ❌ | Navigation callback |
 
-### PreviewFile Type
+### File Type Definitions
 
 ```typescript
-interface PreviewFile {
+// Supports three types of file input
+type PreviewFileInput = File | PreviewFileLink | string;
+
+// 1. Native File object (Browser File API)
+const file: File = ...;
+
+// 2. File object
+interface PreviewFileLink {
+  id?: string;       // Optional unique identifier
   name: string;      // File name
   type: string;      // MIME type
-  url: string;       // File URL (blob URLs supported)
+  url: string;       // File URL (supports blob URLs and HTTP URLs)
+  size?: number;     // File size in bytes
 }
+
+// 3. HTTP URL string
+const url: string = 'https://example.com/file.pdf';
 ```
+
+### Usage Examples
+
+```typescript
+// Method 1: Using native File objects
+const files = [file1, file2]; // Array of File objects
+
+// Method 2: Using HTTP URL strings
+const files = [
+  'https://example.com/image.jpg',
+  'https://example.com/document.pdf',
+];
+
+// Method 3: Using file objects
+const files = [
+  {
+    name: 'presentation.pptx',
+    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    url: '/path/to/presentation.pptx',
+  },
+];
+
+// Method 4: Mixed usage
+const files = [
+  file1,  // File object
+  'https://example.com/image.jpg',  // URL string
+  { name: 'doc.pdf', type: 'application/pdf', url: '/doc.pdf' },  // File object
+];
+```
+
+### Supported MIME Types
+
+#### Office Documents
+- **Word**: `application/vnd.openxmlformats-officedocument.wordprocessingml.document` (.docx)
+- **Excel**: `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` (.xlsx)
+- **PowerPoint**: `application/vnd.openxmlformats-officedocument.presentationml.presentation` (.pptx)
+- **PowerPoint (Legacy)**: `application/vnd.ms-powerpoint` (.ppt)
+
+#### Other Documents
+- **PDF**: `application/pdf`
+
+#### Media Files
+- **Images**: `image/jpeg`, `image/png`, `image/gif`, `image/webp`, `image/svg+xml`, etc.
+- **Videos**: `video/mp4`, `video/webm`, `video/ogg`, etc.
+- **Audio**: `audio/mpeg`, `audio/wav`, `audio/ogg`, etc.
+
+#### Text Files
+- **Markdown**: File extensions `.md` or `.markdown`
+- **Code**: Auto-detected by file extension (`.js`, `.ts`, `.py`, `.java`, etc.)
+- **Plain Text**: `text/plain`, `text/csv`, etc.
 
 ## 🎨 Custom Styling
 

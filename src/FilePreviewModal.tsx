@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -13,11 +13,13 @@ import {
   Minimize2,
   RefreshCw,
 } from 'lucide-react';
-import { PreviewFile, FileType } from './types';
+import { PreviewFile, PreviewFileInput, FileType } from './types';
+import { normalizeFiles } from './utils/fileNormalizer';
 import { ImageRenderer } from './renderers/ImageRenderer';
 import { PdfRenderer } from './renderers/PdfRenderer';
 import { DocxRenderer } from './renderers/DocxRenderer';
 import { XlsxRenderer } from './renderers/XlsxRenderer';
+import { PptxRenderer } from './renderers/PptxRenderer';
 import { VideoRenderer } from './renderers/VideoRenderer';
 import { AudioRenderer } from './renderers/AudioRenderer';
 import { MarkdownRenderer } from './renderers/MarkdownRenderer';
@@ -25,7 +27,7 @@ import { TextRenderer } from './renderers/TextRenderer';
 import { UnsupportedRenderer } from './renderers/UnsupportedRenderer';
 
 interface FilePreviewModalProps {
-  files: PreviewFile[];
+  files: PreviewFileInput[];
   currentIndex: number;
   isOpen: boolean;
   onClose: () => void;
@@ -47,6 +49,9 @@ const getFileType = (file: PreviewFile): FileType => {
   }
   if (mimeType.includes('spreadsheetml') || ext === 'xlsx') {
     return 'xlsx';
+  }
+  if (mimeType.includes('presentationml') || ext === 'pptx' || ext === 'ppt') {
+    return 'pptx';
   }
   if (mimeType.startsWith('video/') || ['mp4', 'webm', 'ogg', 'ogv', 'mov', 'avi', 'mkv', 'm4v', '3gp', 'flv'].includes(ext)) {
     return 'video';
@@ -84,7 +89,10 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [, setTotalPages] = useState(1); // PDF 总页数,由 PdfRenderer 更新
 
-  const currentFile = files[currentIndex];
+  // 标准化文件输入
+  const normalizedFiles = useMemo(() => normalizeFiles(files), [files]);
+
+  const currentFile = normalizedFiles[currentIndex];
   const fileType = currentFile ? getFileType(currentFile) : 'unsupported';
 
   // 重置状态当文件改变时
@@ -128,14 +136,14 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
         onClose();
       } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
         onNavigate?.(currentIndex - 1);
-      } else if (e.key === 'ArrowRight' && currentIndex < files.length - 1) {
+      } else if (e.key === 'ArrowRight' && currentIndex < normalizedFiles.length - 1) {
         onNavigate?.(currentIndex + 1);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, currentIndex, files.length, onClose, onNavigate]);
+  }, [isOpen, currentIndex, normalizedFiles.length, onClose, onNavigate]);
 
   const handleZoomIn = useCallback(() => {
     setZoom((prev) => Math.min(prev + 0.25, 5));
@@ -214,7 +222,7 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
                     {currentFile.name}
                   </h2>
                   <p className="text-white/60 text-sm">
-                    {currentIndex + 1} / {files.length}
+                    {currentIndex + 1} / {normalizedFiles.length}
                   </p>
                 </div>
 
@@ -317,6 +325,7 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
               )}
               {fileType === 'docx' && <DocxRenderer url={currentFile.url} />}
               {fileType === 'xlsx' && <XlsxRenderer url={currentFile.url} />}
+              {fileType === 'pptx' && <PptxRenderer url={currentFile.url} />}
               {fileType === 'video' && <VideoRenderer url={currentFile.url} />}
               {fileType === 'audio' && (
                 <AudioRenderer url={currentFile.url} fileName={currentFile.name} />
@@ -335,7 +344,7 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
             </div>
 
             {/* 左右导航箭头 */}
-            {files.length > 1 && (
+            {normalizedFiles.length > 1 && (
               <>
                 {currentIndex > 0 && (
                   <motion.button
@@ -349,7 +358,7 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
                   </motion.button>
                 )}
 
-                {currentIndex < files.length - 1 && (
+                {currentIndex < normalizedFiles.length - 1 && (
                   <motion.button
                     initial={{ x: 100, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}

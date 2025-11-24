@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { FilePreviewModal } from './FilePreviewModal';
-import { PreviewFile } from './types';
+import { PreviewFile, PreviewFileInput } from './types';
 import { FileText, Image, FileSpreadsheet, Video, Music, Upload, X, Package, BookOpen, Code } from 'lucide-react';
 import packageJson from '../package.json';
 
@@ -8,7 +8,7 @@ function App() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [currentFileIndex, setCurrentFileIndex] = useState(0);
   const [uploadedFiles, setUploadedFiles] = useState<PreviewFile[]>([]);
-  const [allFiles, setAllFiles] = useState<PreviewFile[]>([]);
+  const [allFiles, setAllFiles] = useState<PreviewFileInput[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -89,7 +89,11 @@ function App() {
       }
       return prev.filter((f) => f.id !== fileId);
     });
-    setAllFiles((prev) => prev.filter((f) => f.id !== fileId));
+    setAllFiles((prev) => prev.filter((f) => {
+      if (typeof f === 'string') return true;
+      if (f instanceof File) return true;
+      return f.id !== fileId;
+    }));
   };
 
   const formatFileSize = (bytes?: number) => {
@@ -175,7 +179,7 @@ function App() {
               onChange={handleFileUpload}
               className="hidden"
               id="file-upload"
-              accept="image/*,video/*,audio/*,.pdf,.docx,.xlsx,.md,.txt,.js,.jsx,.ts,.tsx,.json,.py,.java,.cpp,.c,.cs,.php,.rb,.go,.rs,.html,.css,.xml,.yaml,.yml,.mp4,.webm,.ogg,.ogv,.mov,.avi,.mkv,.m4v,.3gp,.flv"
+              accept="image/*,video/*,audio/*,.pdf,.docx,.xlsx,.pptx,.ppt,.md,.txt,.js,.jsx,.ts,.tsx,.json,.py,.java,.cpp,.c,.cs,.php,.rb,.go,.rs,.html,.css,.xml,.yaml,.yml,.mp4,.webm,.ogg,.ogv,.mov,.avi,.mkv,.m4v,.3gp,.flv"
             />
             <label
               htmlFor="file-upload"
@@ -282,9 +286,9 @@ function App() {
                   <tbody className="text-gray-400">
                     <tr className="border-b border-white/5">
                       <td className="py-3 px-4 font-mono text-blue-400">files</td>
-                      <td className="py-3 px-4 font-mono text-sm">PreviewFile[]</td>
+                      <td className="py-3 px-4 font-mono text-sm">PreviewFileInput[]</td>
                       <td className="py-3 px-4">✅</td>
-                      <td className="py-3 px-4">文件列表</td>
+                      <td className="py-3 px-4">文件列表（支持 File 对象、文件对象或 URL 字符串）</td>
                     </tr>
                     <tr className="border-b border-white/5">
                       <td className="py-3 px-4 font-mono text-blue-400">currentIndex</td>
@@ -317,14 +321,26 @@ function App() {
 
             {/* 类型定义 */}
             <div>
-              <h3 className="text-xl font-semibold text-white mb-4">PreviewFile 类型</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">支持的文件类型</h3>
               <div className="bg-black/30 rounded-lg p-4 font-mono text-sm">
                 <pre className="text-gray-300">
-                  {`interface PreviewFile {
+                  {`// 1. 原生 File 对象
+const file: File = ...;
+
+// 2. 文件对象（包含 name, url, type）
+interface PreviewFileLink {
+  id?: string;
   name: string;      // 文件名
   type: string;      // MIME 类型
-  url: string;       // 文件 URL (支持 blob URL)
-}`}
+  url: string;       // 文件 URL
+  size?: number;     // 文件大小（字节）
+}
+
+// 3. HTTP URL 字符串
+const url: string = 'https://example.com/file.pdf';
+
+// files 属性支持以上三种类型的混合数组
+type PreviewFileInput = File | PreviewFileLink | string;`}
                 </pre>
               </div>
             </div>
@@ -338,20 +354,37 @@ function App() {
 import { useState } from 'react';
 
 function App() {
-  const [files, setFiles] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
+  // 方式 1: 使用原生 File 对象
   const handleFileSelect = (file: File) => {
-    const previewFile = {
-      name: file.name,
-      type: file.type,
-      url: URL.createObjectURL(file),
-    };
-    setFiles([previewFile]);
+    setFiles([file]); // 直接传入 File 对象
     setCurrentIndex(0);
     setIsOpen(true);
   };
+
+  // 方式 2: 使用 HTTP URL 字符串
+  const files = [
+    'https://example.com/image.jpg',
+    'https://example.com/document.pdf',
+  ];
+
+  // 方式 3: 使用文件对象
+  const files = [
+    {
+      name: 'presentation.pptx',
+      type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      url: '/path/to/presentation.pptx',
+    },
+  ];
+
+  // 方式 4: 混合使用
+  const files = [
+    file1,  // File 对象
+    'https://example.com/image.jpg',  // URL 字符串
+    { name: 'doc.pdf', type: 'application/pdf', url: '/doc.pdf' },  // 文件对象
+  ];
 
   return (
     <FilePreviewModal
@@ -385,7 +418,7 @@ function App() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-4">
                   <h4 className="text-white font-medium mb-2">📄 文档</h4>
-                  <p className="text-gray-400 text-sm">PDF, DOCX, XLSX</p>
+                  <p className="text-gray-400 text-sm">PDF, DOCX, XLSX, PPTX</p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-4">
                   <h4 className="text-white font-medium mb-2">📝 Markdown</h4>
