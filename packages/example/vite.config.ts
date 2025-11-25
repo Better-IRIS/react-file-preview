@@ -18,11 +18,11 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: resolve(__dirname, '../../node_modules/.pnpm/pdfjs-dist@4.8.69/node_modules/pdfjs-dist/build/pdf.worker.min.mjs'),
+          src: resolve(__dirname, '../react-file-preview/node_modules/pdfjs-dist/build/pdf.worker.min.mjs'),
           dest: './pdfjs',
         },
         {
-          src: resolve(__dirname, '../../node_modules/.pnpm/pdfjs-dist@4.8.69/node_modules/pdfjs-dist/cmaps'),
+          src: resolve(__dirname, '../react-file-preview/node_modules/pdfjs-dist/cmaps'),
           dest: './pdfjs',
         },
       ],

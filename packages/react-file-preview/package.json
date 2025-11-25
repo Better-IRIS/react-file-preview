@@ -17,6 +17,8 @@
   "files": [
     "lib",
     "README.md",
+    "README.zh-CN.md",
+    "PDF_CONFIGURATION.md",
     "LICENSE"
   ],
   "keywords": [

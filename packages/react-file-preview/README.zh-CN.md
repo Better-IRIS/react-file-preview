@@ -39,6 +39,75 @@ pnpm add react-file-preview
 import 'react-file-preview/style.css';
 ```
 
+### PDF.js 配置（可选）
+
+如果你需要预览 PDF 文件，建议配置 PDF.js 使用本地静态文件以提高性能和稳定性：
+
+#### 方式 1: 使用 CDN（默认）
+
+默认情况下，组件会自动使用 unpkg CDN 加载 PDF.js，无需额外配置。
+
+#### 方式 2: 使用本地静态文件（推荐用于生产环境）
+
+1. 将 PDF.js 文件复制到你的 public 目录：
+
+```bash
+# 从 node_modules 复制 PDF.js 文件到 public 目录
+cp -r node_modules/pdfjs-dist/build/pdf.worker.min.mjs public/pdfjs/
+cp -r node_modules/pdfjs-dist/cmaps public/pdfjs/
+```
+
+2. 在应用入口配置 PDF.js：
+
+```tsx
+import { configurePdfjs } from '@eternalheart/react-file-preview';
+
+// 配置使用本地静态文件
+configurePdfjs({
+  workerSrc: '/pdfjs/pdf.worker.min.mjs',
+  cMapUrl: '/pdfjs/cmaps/',
+  cMapPacked: true
+});
+```
+
+#### 使用 Vite 自动复制（推荐）
+
+在 `vite.config.ts` 中配置自动复制：
+
+```ts
+import { defineConfig } from 'vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+
+export default defineConfig({
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'node_modules/pdfjs-dist/build/pdf.worker.min.mjs',
+          dest: 'pdfjs'
+        },
+        {
+          src: 'node_modules/pdfjs-dist/cmaps',
+          dest: 'pdfjs'
+        }
+      ]
+    })
+  ]
+});
+```
+
+然后在应用入口配置：
+
+```tsx
+import { configurePdfjs } from '@eternalheart/react-file-preview';
+
+configurePdfjs({
+  workerSrc: '/pdfjs/pdf.worker.min.mjs',
+  cMapUrl: '/pdfjs/cmaps/',
+  cMapPacked: true
+});
+```
+
 ## 🚀 快速开始
 
 📖 **第一次使用？** 查看 [快速开始指南](./QUICK_START.md) 获取 5 分钟入门教程！

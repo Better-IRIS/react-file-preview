@@ -18,3 +18,7 @@ export type {
 // 导出工具函数
 export { normalizeFile, normalizeFiles } from './utils/fileNormalizer';
 
+// 导出 PDF.js 配置函数和类型
+export { configurePdfjs, pdfjs } from './utils/pdfConfig';
+export type { PdfConfigOptions } from './utils/pdfConfig';
+

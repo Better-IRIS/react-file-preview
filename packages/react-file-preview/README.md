@@ -41,6 +41,75 @@ pnpm add @eternalheart/react-file-preview
 import '@eternalheart/react-file-preview/style.css';
 ```
 
+### PDF.js Configuration (Optional)
+
+If you need to preview PDF files, it's recommended to configure PDF.js to use local static files for better performance and stability:
+
+#### Method 1: Use CDN (Default)
+
+By default, the component automatically uses unpkg CDN to load PDF.js, no additional configuration needed.
+
+#### Method 2: Use Local Static Files (Recommended for Production)
+
+1. Copy PDF.js files to your public directory:
+
+```bash
+# Copy PDF.js files from node_modules to public directory
+cp -r node_modules/pdfjs-dist/build/pdf.worker.min.mjs public/pdfjs/
+cp -r node_modules/pdfjs-dist/cmaps public/pdfjs/
+```
+
+2. Configure PDF.js in your app entry:
+
+```tsx
+import { configurePdfjs } from '@eternalheart/react-file-preview';
+
+// Configure to use local static files
+configurePdfjs({
+  workerSrc: '/pdfjs/pdf.worker.min.mjs',
+  cMapUrl: '/pdfjs/cmaps/',
+  cMapPacked: true
+});
+```
+
+#### Auto-copy with Vite (Recommended)
+
+Configure auto-copy in `vite.config.ts`:
+
+```ts
+import { defineConfig } from 'vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+
+export default defineConfig({
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'node_modules/pdfjs-dist/build/pdf.worker.min.mjs',
+          dest: 'pdfjs'
+        },
+        {
+          src: 'node_modules/pdfjs-dist/cmaps',
+          dest: 'pdfjs'
+        }
+      ]
+    })
+  ]
+});
+```
+
+Then configure in your app entry:
+
+```tsx
+import { configurePdfjs } from '@eternalheart/react-file-preview';
+
+configurePdfjs({
+  workerSrc: '/pdfjs/pdf.worker.min.mjs',
+  cMapUrl: '/pdfjs/cmaps/',
+  cMapPacked: true
+});
+```
+
 ## 🚀 Quick Start
 
 📖 **New to this library?** Check out the [Quick Start Guide](./QUICK_START.md) for a 5-minute introduction!
