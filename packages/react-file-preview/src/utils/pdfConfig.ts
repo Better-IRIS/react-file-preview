@@ -4,32 +4,33 @@ import { pdfjs } from 'react-pdf';
  * PDF.js Worker 配置
  *
  * 配置策略:
- * 1. 优先尝试使用本地 public 目录中的 worker 文件
- * 2. 如果本地文件不存在,降级使用 CDN
- * 3. 使用 HTTPS CDN 确保安全性
+ * 1. 优先使用库内置的静态文件（打包在 lib/pdfjs 目录）
+ * 2. 如果静态文件加载失败，兜底使用 CDN
  */
 
-const pdfjsVersion = pdfjs.version;
-
-// 配置 worker 路径
-// 优先使用本地 worker,如果不存在则使用 CDN
-const workerSrc = `/pdf.worker.min.mjs`;
-
-// 尝试使用本地 worker
-pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
-
-// 添加错误处理,如果本地 worker 加载失败,自动降级到 CDN
-const originalWorkerSrc = pdfjs.GlobalWorkerOptions.workerSrc;
-const cdnWorkerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsVersion}/build/pdf.worker.min.mjs`;
-
-// 监听 worker 加载错误
+// 配置 PDF.js worker 和 cmaps
 if (typeof window !== 'undefined') {
-  window.addEventListener('error', (event) => {
-    if (event.message?.includes('pdf.worker') && pdfjs.GlobalWorkerOptions.workerSrc === originalWorkerSrc) {
-      console.warn('本地 PDF worker 加载失败,切换到 CDN:', cdnWorkerSrc);
-      pdfjs.GlobalWorkerOptions.workerSrc = cdnWorkerSrc;
+    try {
+        // 尝试使用相对于当前模块的静态文件
+        // @ts-ignore
+        const workerSrc = new URL(/* @vite-ignore */ './pdfjs/pdf.worker.min.mjs', import.meta.url).toString();
+        // @ts-ignore
+        const cMapUrl = new URL(/* @vite-ignore */ './pdfjs/cmaps/', import.meta.url).toString();
+
+        pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
+        // @ts-ignore - cMapUrl 和 cMapPacked 在 react-pdf 的类型定义中不存在，但在运行时可用
+        pdfjs.GlobalWorkerOptions.cMapUrl = cMapUrl;
+        // @ts-ignore
+        pdfjs.GlobalWorkerOptions.cMapPacked = true;
+    } catch (error) {
+        // 如果静态文件加载失败，使用 CDN 兜底
+        console.warn('Failed to load local PDF.js worker, falling back to CDN:', error);
+        pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+        // @ts-ignore
+        pdfjs.GlobalWorkerOptions.cMapUrl = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`;
+        // @ts-ignore
+        pdfjs.GlobalWorkerOptions.cMapPacked = true;
     }
-  });
 }
 
 export { pdfjs };

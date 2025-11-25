@@ -31,21 +31,18 @@ yarn add @eternalheart/react-file-preview
 import '@eternalheart/react-file-preview/style.css'
 ```
 
-## PDF 支持配置（可选）
+## PDF 支持
 
-组件已内置 PDF.js worker 配置，会自动尝试从以下位置加载：
+组件已内置 PDF.js worker 配置，**无需任何额外配置**。
 
-1. 本地 `/pdf.worker.min.mjs`（如果存在）
-2. CDN（自动降级）
-
-如果你想使用本地 worker 以获得更好的性能，可以将 worker 文件复制到 public 目录：
-
-```bash
-cp node_modules/pdfjs-dist/build/pdf.worker.min.mjs public/
-```
+Worker 文件会自动从 CDN 加载，确保：
+- ✅ 零配置，开箱即用
+- ✅ 自动匹配 pdfjs-dist 版本
+- ✅ 稳定可靠的加载方式
+- ✅ 无需手动复制任何文件
 
 ::: tip
-如果不复制 worker 文件，组件会自动使用 CDN 加载，无需额外配置。
+组件会自动使用 unpkg CDN 加载 PDF.js worker 文件，无需任何手动配置。
 :::
 
 ## 验证安装
