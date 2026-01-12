@@ -117,20 +117,20 @@ export const AudioRenderer: React.FC<AudioRendererProps> = ({ url, fileName }) =
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full p-8 gap-8">
+    <div className="flex flex-col items-center justify-center w-full h-full p-4 md:p-8 gap-4 md:gap-8">
       {/* 音频封面 */}
-      <div className="w-64 h-64 rounded-3xl bg-gradient-to-br from-purple-500 via-pink-500 to-rose-500 flex items-center justify-center shadow-2xl backdrop-blur-xl">
-        <Music className="w-32 h-32 text-white" />
+      <div className="w-48 h-48 md:w-64 md:h-64 rounded-3xl bg-gradient-to-br from-purple-500 via-pink-500 to-rose-500 flex items-center justify-center shadow-2xl backdrop-blur-xl">
+        <Music className="w-24 h-24 md:w-32 md:h-32 text-white" />
       </div>
 
       {/* 文件名 */}
-      <div className="text-white text-center max-w-md">
-        <p className="text-2xl font-medium mb-1">{fileName}</p>
-        <p className="text-sm text-white/60">音频文件</p>
+      <div className="text-white text-center max-w-sm md:max-w-md px-4">
+        <p className="text-xl md:text-2xl font-medium mb-1 truncate">{fileName}</p>
+        <p className="text-xs md:text-sm text-white/60">音频文件</p>
       </div>
 
       {/* 播放控制器 */}
-      <div className="w-full max-w-md bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+      <div className="w-full max-w-sm md:max-w-md bg-white/10 backdrop-blur-xl rounded-2xl p-4 md:p-6 border border-white/20">
         {/* 进度条 */}
         <div className="mb-4">
           <div className="relative h-4 flex items-center">

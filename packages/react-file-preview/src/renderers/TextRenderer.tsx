@@ -96,13 +96,13 @@ export const TextRenderer: React.FC<TextRendererProps> = ({ url, fileName }) => 
   }
 
   return (
-    <div className="w-full h-full overflow-auto p-8">
-      <div className="max-w-6xl mx-auto bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
+    <div className="w-full h-full overflow-auto p-4 md:p-8">
+      <div className="max-w-full md:max-w-6xl mx-auto bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
         {/* 文件头部 */}
-        <div className="flex items-center gap-3 px-6 py-4 bg-white/5 border-b border-white/10">
-          <FileText className="w-5 h-5 text-white/70" />
-          <span className="text-white font-medium">{fileName}</span>
-          <span className="ml-auto text-xs text-white/50 uppercase">{language}</span>
+        <div className="flex items-center gap-2 md:gap-3 px-4 py-3 md:px-6 md:py-4 bg-white/5 border-b border-white/10">
+          <FileText className="w-4 h-4 md:w-5 md:h-5 text-white/70 flex-shrink-0" />
+          <span className="text-white font-medium text-sm md:text-base truncate">{fileName}</span>
+          <span className="ml-auto text-xs text-white/50 uppercase flex-shrink-0">{language}</span>
         </div>
 
         {/* 代码内容 */}

@@ -92,6 +92,11 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [, setTotalPages] = useState(1); // PDF 总页数,由 PdfRenderer 更新
 
+  // 滑动手势状态
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const minSwipeDistance = 50;
+
   // 标准化文件输入
   const normalizedFiles = useMemo(() => normalizeFiles(files), [files]);
 
@@ -197,6 +202,30 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
     link.click();
   }, [currentFile]);
 
+  // 滑动手势处理
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && currentIndex < normalizedFiles.length - 1) {
+      onNavigate?.(currentIndex + 1);
+    }
+    if (isRightSwipe && currentIndex > 0) {
+      onNavigate?.(currentIndex - 1);
+    }
+  }, [touchStart, touchEnd, minSwipeDistance, currentIndex, normalizedFiles.length, onNavigate]);
+
   if (!isOpen || !currentFile) return null;
 
   const showZoomControls = fileType === 'image' || fileType === 'pdf';
@@ -225,19 +254,29 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
               exit={{ y: -100 }}
               className="absolute top-0 left-0 right-0 z-10 p-4"
             >
-              <div className="max-w-7xl mx-auto flex items-center justify-between bg-black/40 backdrop-blur-xl rounded-2xl px-6 py-4 shadow-2xl border border-white/10">
-                {/* 文件名 */}
-                <div className="flex-1 min-w-0">
-                  <h2 className="text-white font-medium text-lg truncate">
-                    {currentFile.name}
-                  </h2>
-                  <p className="text-white/60 text-sm">
-                    {currentIndex + 1} / {normalizedFiles.length}
-                  </p>
+              <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between bg-black/40 backdrop-blur-xl rounded-2xl px-3 md:px-6 py-3 md:py-4 shadow-2xl border border-white/10 gap-2 md:gap-0">
+                {/* 第一行：文件名 + 关闭按钮（移动端） */}
+                <div className="flex items-center justify-between md:flex-1 md:min-w-0 md:mr-4">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-white font-medium text-sm md:text-lg truncate">
+                      {currentFile.name}
+                    </h2>
+                    <p className="text-white/60 text-xs md:text-sm">
+                      {currentIndex + 1} / {normalizedFiles.length}
+                    </p>
+                  </div>
+                  {/* 移动端关闭按钮 */}
+                  <div className="md:hidden ml-2">
+                    <ToolbarButton
+                      icon={<X className="w-5 h-5" />}
+                      label="关闭"
+                      onClick={onClose}
+                    />
+                  </div>
                 </div>
 
-                {/* 工具按钮 */}
-                <div className="flex items-center gap-2 ml-4">
+                {/* 第二行：工具按钮 - 支持水平滚动 */}
+                <div className="flex items-center gap-1 md:gap-2 overflow-x-auto scrollbar-hide flex-shrink-0">
                   {showZoomControls && (
                     <>
                       <ToolbarButton
@@ -303,19 +342,26 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
                     onClick={handleDownload}
                   />
 
-                  <div className="w-px h-6 bg-white/20 mx-2" />
-
-                  <ToolbarButton
-                    icon={<X className="w-5 h-5" />}
-                    label="关闭"
-                    onClick={onClose}
-                  />
+                  {/* 桌面端关闭按钮 */}
+                  <div className="hidden md:flex items-center">
+                    <div className="w-px h-6 bg-white/20 mx-2" />
+                    <ToolbarButton
+                      icon={<X className="w-5 h-5" />}
+                      label="关闭"
+                      onClick={onClose}
+                    />
+                  </div>
                 </div>
               </div>
             </motion.div>
 
             {/* 内容区域 */}
-            <div className="flex-1 flex items-center justify-center pt-24 pb-8 overflow-auto">
+            <div
+              className="flex-1 flex items-center justify-center pt-32 md:pt-24 pb-4 md:pb-8 overflow-auto"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               {customRenderer ? (
                 // 使用自定义渲染器
                 customRenderer.render(currentFile)
@@ -369,9 +415,9 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
                     animate={{ x: 0, opacity: 1 }}
                     exit={{ x: -100, opacity: 0 }}
                     onClick={() => onNavigate?.(currentIndex - 1)}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-black/60 transition-all shadow-2xl"
+                    className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-black/60 transition-all shadow-2xl"
                   >
-                    <ChevronLeft className="w-6 h-6" />
+                    <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
                   </motion.button>
                 )}
 
@@ -381,9 +427,9 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
                     animate={{ x: 0, opacity: 1 }}
                     exit={{ x: 100, opacity: 0 }}
                     onClick={() => onNavigate?.(currentIndex + 1)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-black/60 transition-all shadow-2xl"
+                    className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white hover:bg-black/60 transition-all shadow-2xl"
                   >
-                    <ChevronRight className="w-6 h-6" />
+                    <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
                   </motion.button>
                 )}
               </>

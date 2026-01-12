@@ -125,8 +125,8 @@ export const VideoRenderer: React.FC<VideoRendererProps> = ({ url }) => {
   }
 
   return (
-    <div className="flex items-center justify-center w-full h-full p-8">
-      <div className="w-full max-w-5xl relative">
+    <div className="flex items-center justify-center w-full h-full p-4 md:p-8">
+      <div className="w-full max-w-full md:max-w-5xl relative">
         {/* 加载状态 */}
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm rounded-2xl z-10">

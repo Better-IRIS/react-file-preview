@@ -55,9 +55,9 @@ export const DocxRenderer: React.FC<DocxRendererProps> = ({ url }) => {
   }
 
   return (
-    <div className="w-full h-full overflow-auto p-8">
+    <div className="w-full h-full overflow-auto p-4 md:p-8">
       <div
-        className="max-w-4xl mx-auto bg-white rounded-lg shadow-2xl p-12"
+        className="max-w-full md:max-w-4xl mx-auto bg-white rounded-lg shadow-2xl p-6 md:p-12"
         dangerouslySetInnerHTML={{ __html: html }}
         style={{
           fontFamily: 'system-ui, -apple-system, sans-serif',

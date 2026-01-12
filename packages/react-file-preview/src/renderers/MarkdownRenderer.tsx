@@ -54,9 +54,9 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ url }) => {
   }
 
   return (
-    <div className="w-full h-full overflow-auto p-8">
-      <div className="max-w-4xl mx-auto bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-        <div className="prose prose-invert prose-lg max-w-none">
+    <div className="w-full h-full overflow-auto p-4 md:p-8">
+      <div className="max-w-full md:max-w-4xl mx-auto bg-white/5 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-white/10">
+        <div className="prose prose-invert prose-sm md:prose-lg max-w-none">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{

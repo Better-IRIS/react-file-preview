@@ -227,39 +227,39 @@ export const PptxRenderer: React.FC<PptxRendererProps> = ({ url }) => {
   }, [url, calculateDimensions]);
 
   return (
-    <div className="relative flex flex-col items-center w-full h-full pt-[8px]">
+    <div className="relative flex flex-col items-center w-full h-full pt-2 px-2 md:px-4">
       {/* 加载状态 - 绝对定位覆盖 */}
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-10 rounded-2xl">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-10 rounded-xl md:rounded-2xl">
           <div className="text-center">
-            <div className="w-12 h-12 mx-auto mb-3 border-4 border-white/20 border-t-white rounded-full animate-spin" />
-            <p className="text-sm text-white/70 font-medium">加载 PPT 中...</p>
+            <div className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+            <p className="text-xs md:text-sm text-white/70 font-medium">加载 PPT 中...</p>
           </div>
         </div>
       )}
 
       {/* 错误状态 - 绝对定位覆盖 */}
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-10 rounded-2xl">
-          <div className="text-center max-w-md">
-            <div className="w-32 h-32 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 flex items-center justify-center shadow-2xl">
-              <Presentation className="w-16 h-16 text-white" />
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-10 rounded-xl md:rounded-2xl">
+          <div className="text-center max-w-sm md:max-w-md px-4">
+            <div className="w-24 h-24 md:w-32 md:h-32 mx-auto mb-4 md:mb-6 rounded-2xl md:rounded-3xl bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 flex items-center justify-center shadow-2xl">
+              <Presentation className="w-12 h-12 md:w-16 md:h-16 text-white" />
             </div>
-            <p className="text-xl text-white/90 mb-3 font-medium">PPT 预览</p>
-            <p className="text-sm text-white/60 mb-6">
+            <p className="text-lg md:text-xl text-white/90 mb-2 md:mb-3 font-medium">PPT 预览</p>
+            <p className="text-xs md:text-sm text-white/60 mb-4 md:mb-6">
               {error || '浏览器暂不支持直接预览 PPT 文件'}
             </p>
             <a
               href={url}
               download
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl hover:scale-105 transition-all shadow-lg"
+              className="inline-flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm md:text-base rounded-lg md:rounded-xl hover:scale-105 transition-all shadow-lg"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
               下载文件
             </a>
-            <p className="text-xs text-white/40 mt-4">
+            <p className="text-xs text-white/40 mt-3 md:mt-4">
               提示：可以使用 Microsoft PowerPoint 或 WPS 打开
             </p>
           </div>
@@ -269,7 +269,7 @@ export const PptxRenderer: React.FC<PptxRendererProps> = ({ url }) => {
       {/* PPT 容器 - 始终渲染 */}
       <div
         ref={containerRef}
-        className="pptx-wrapper w-full max-w-6xl"
+        className="pptx-wrapper w-full max-w-full md:max-w-6xl"
       />
     </div>
   );

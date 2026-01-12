@@ -92,7 +92,7 @@ export const PdfRenderer: React.FC<PdfRendererProps> = ({
   return (
     <div
       ref={containerRef}
-      className="flex flex-col items-center w-full h-full overflow-auto py-8 px-4"
+      className="flex flex-col items-center w-full h-full overflow-auto py-4 md:py-8 px-2 md:px-4"
     >
       {error && (
         <div className="text-white/70 text-center">
@@ -145,7 +145,7 @@ export const PdfRenderer: React.FC<PdfRendererProps> = ({
 
       {/* 底部页码指示器 */}
       {numPages > 0 && (
-        <div className="sticky bottom-4 mt-8 bg-black/60 backdrop-blur-xl text-white px-6 py-3 rounded-full text-sm font-medium shadow-2xl border border-white/10">
+        <div className="sticky bottom-2 md:bottom-4 mt-4 md:mt-8 bg-black/60 backdrop-blur-xl text-white px-4 py-2 md:px-6 md:py-3 rounded-full text-xs md:text-sm font-medium shadow-2xl border border-white/10">
           第 {currentPage} 页 / 共 {numPages} 页
         </div>
       )}
