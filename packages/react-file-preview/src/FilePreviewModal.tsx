@@ -161,11 +161,11 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
   }, [isOpen, currentIndex, normalizedFiles.length, onClose, onNavigate]);
 
   const handleZoomIn = useCallback(() => {
-    setZoom((prev) => Math.min(prev + 0.25, 5));
+    setZoom((prev) => Math.min(prev + 0.25, 10));
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setZoom((prev) => Math.max(prev - 0.25, 0.5));
+    setZoom((prev) => Math.max(prev - 0.25, 0.01));
   }, []);
 
   const handleRotate = useCallback(() => {
@@ -283,7 +283,7 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
                         icon={<ZoomOut className="w-5 h-5" />}
                         label="缩小"
                         onClick={handleZoomOut}
-                        disabled={zoom <= 0.5}
+                        disabled={zoom <= 0.01}
                       />
                       <span className="text-white/70 text-sm min-w-[4rem] text-center font-medium">
                         {Math.round(zoom * 100)}%
@@ -292,7 +292,7 @@ export const FilePreviewModal: React.FC<FilePreviewModalProps> = ({
                         icon={<ZoomIn className="w-5 h-5" />}
                         label="放大"
                         onClick={handleZoomIn}
-                        disabled={zoom >= 5}
+                        disabled={zoom >= 10}
                       />
                       <div className="w-px h-6 bg-white/20 mx-2" />
                       <ToolbarButton

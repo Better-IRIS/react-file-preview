@@ -59,7 +59,7 @@ export const ImageRenderer: React.FC<ImageRendererProps> = ({
     e.stopPropagation();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
     setInternalZoom(prev => {
-      const newZoom = Math.max(0.5, Math.min(5, prev + delta)); // 限制缩放范围 0.5-5
+      const newZoom = Math.max(0.01, Math.min(10, prev + delta)); // 限制缩放范围 0.01-10
       // 同步缩放比例到父组件
       if (onZoomChange) {
         onZoomChange(newZoom);
