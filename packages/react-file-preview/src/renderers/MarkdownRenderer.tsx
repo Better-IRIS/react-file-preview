@@ -37,26 +37,26 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ url }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full">
+        <div className="rfp-w-12 rfp-h-12 rfp-border-4 rfp-border-white/20 rfp-border-t-white rfp-rounded-full rfp-animate-spin" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="text-white/70 text-center">
-          <p className="text-lg">{error}</p>
+      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full">
+        <div className="rfp-text-white/70 rfp-text-center">
+          <p className="rfp-text-lg">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-full overflow-auto p-4 md:p-8">
-      <div className="max-w-full md:max-w-4xl mx-auto bg-white/5 backdrop-blur-sm rounded-2xl p-4 md:p-8 border border-white/10">
-        <div className="prose prose-invert prose-sm md:prose-lg max-w-none">
+    <div className="rfp-w-full rfp-h-full rfp-overflow-auto rfp-p-4 md:rfp-p-8">
+      <div className="rfp-max-w-full md:rfp-max-w-4xl rfp-mx-auto rfp-bg-white/5 rfp-backdrop-blur-sm rfp-rounded-2xl rfp-p-4 md:rfp-p-8 rfp-border rfp-border-white/10">
+        <div className="rfp-max-w-none">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -67,63 +67,63 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ url }) => {
                     style={vscDarkPlus}
                     language={match[1]}
                     PreTag="div"
-                    className="rounded-lg"
+                    className="rfp-rounded-lg"
                     {...props}
                   >
                     {String(children).replace(/\n$/, '')}
                   </SyntaxHighlighter>
                 ) : (
-                  <code className="bg-white/10 px-1.5 py-0.5 rounded text-sm" {...props}>
+                  <code className="rfp-bg-white/10 rfp-px-1.5 rfp-py-0.5 rfp-rounded rfp-text-sm" {...props}>
                     {children}
                   </code>
                 );
               },
               h1: ({ children }) => (
-                <h1 className="text-4xl font-bold mb-4 text-white border-b border-white/20 pb-2">
+                <h1 className="rfp-text-4xl rfp-font-bold rfp-mb-4 rfp-text-white rfp-border-b rfp-border-white/20 rfp-pb-2">
                   {children}
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-3xl font-bold mb-3 text-white mt-8">{children}</h2>
+                <h2 className="rfp-text-3xl rfp-font-bold rfp-mb-3 rfp-text-white rfp-mt-8">{children}</h2>
               ),
               h3: ({ children }) => (
-                <h3 className="text-2xl font-bold mb-2 text-white mt-6">{children}</h3>
+                <h3 className="rfp-text-2xl rfp-font-bold rfp-mb-2 rfp-text-white rfp-mt-6">{children}</h3>
               ),
-              p: ({ children }) => <p className="text-white/90 mb-4 leading-relaxed">{children}</p>,
+              p: ({ children }) => <p className="rfp-text-white/90 rfp-mb-4 rfp-leading-relaxed">{children}</p>,
               a: ({ href, children }) => (
                 <a
                   href={href}
-                  className="text-blue-400 hover:text-blue-300 underline"
+                  className="rfp-text-blue-400 hover:rfp-text-blue-300 rfp-underline"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {children}
                 </a>
               ),
-              ul: ({ children }) => <ul className="list-disc list-inside mb-4 text-white/90">{children}</ul>,
-              ol: ({ children }) => <ol className="list-decimal list-inside mb-4 text-white/90">{children}</ol>,
-              li: ({ children }) => <li className="mb-1">{children}</li>,
+              ul: ({ children }) => <ul className="rfp-list-disc rfp-list-inside rfp-mb-4 rfp-text-white/90">{children}</ul>,
+              ol: ({ children }) => <ol className="rfp-list-decimal rfp-list-inside rfp-mb-4 rfp-text-white/90">{children}</ol>,
+              li: ({ children }) => <li className="rfp-mb-1">{children}</li>,
               blockquote: ({ children }) => (
-                <blockquote className="border-l-4 border-blue-500 pl-4 italic text-white/80 my-4">
+                <blockquote className="rfp-border-l-4 rfp-border-blue-500 rfp-pl-4 rfp-italic rfp-text-white/80 rfp-my-4">
                   {children}
                 </blockquote>
               ),
               table: ({ children }) => (
-                <div className="overflow-x-auto my-4">
-                  <table className="min-w-full border border-white/20">{children}</table>
+                <div className="rfp-overflow-x-auto rfp-my-4">
+                  <table className="rfp-min-w-full rfp-border rfp-border-white/20">{children}</table>
                 </div>
               ),
               th: ({ children }) => (
-                <th className="border border-white/20 px-4 py-2 bg-white/10 text-white font-semibold">
+                <th className="rfp-border rfp-border-white/20 rfp-px-4 rfp-py-2 rfp-bg-white/10 rfp-text-white rfp-font-semibold">
                   {children}
                 </th>
               ),
               td: ({ children }) => (
-                <td className="border border-white/20 px-4 py-2 text-white/90">{children}</td>
+                <td className="rfp-border rfp-border-white/20 rfp-px-4 rfp-py-2 rfp-text-white/90">{children}</td>
               ),
-              hr: () => <hr className="border-white/20 my-6" />,
+              hr: () => <hr className="rfp-border-white/20 rfp-my-6" />,
               img: ({ src, alt }) => (
-                <img src={src} alt={alt} className="rounded-lg max-w-full h-auto my-4" />
+                <img src={src} alt={alt} className="rfp-rounded-lg rfp-max-w-full rfp-h-auto rfp-my-4" />
               ),
             }}
           >
@@ -134,4 +134,3 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ url }) => {
     </div>
   );
 };
-

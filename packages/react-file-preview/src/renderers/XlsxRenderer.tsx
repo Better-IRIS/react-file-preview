@@ -47,17 +47,17 @@ export const XlsxRenderer: React.FC<XlsxRendererProps> = ({ url }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full">
+        <div className="rfp-w-12 rfp-h-12 rfp-border-4 rfp-border-white/20 rfp-border-t-white rfp-rounded-full rfp-animate-spin" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="text-white/70 text-center">
-          <p className="text-lg">{error}</p>
+      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full">
+        <div className="rfp-text-white/70 rfp-text-center">
+          <p className="rfp-text-lg">{error}</p>
         </div>
       </div>
     );
@@ -66,17 +66,17 @@ export const XlsxRenderer: React.FC<XlsxRendererProps> = ({ url }) => {
   const currentSheet = sheets[activeSheet];
 
   return (
-    <div className="w-full h-full flex flex-col overflow-hidden">
+    <div className="rfp-w-full rfp-h-full rfp-flex rfp-flex-col rfp-overflow-hidden">
       {/* Sheet Tabs */}
       {sheets.length > 1 && (
-        <div className="flex gap-1 md:gap-2 p-2 md:p-4 bg-black/20 backdrop-blur-sm overflow-x-auto border-b border-white/10 scrollbar-hide">
+        <div className="rfp-flex rfp-gap-1 md:rfp-gap-2 rfp-p-2 md:rfp-p-4 rfp-bg-black/20 rfp-backdrop-blur-sm rfp-overflow-x-auto rfp-border-b rfp-border-white/10 scrollbar-hide">
           {sheets.map((sheet, index) => (
             <button
               key={index}
               onClick={() => setActiveSheet(index)}
-              className={`px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all flex-shrink-0 ${activeSheet === index
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                : 'bg-white/10 text-white hover:bg-white/20'
+              className={`rfp-px-3 rfp-py-1.5 md:rfp-px-4 md:rfp-py-2 rfp-rounded-lg rfp-text-xs md:rfp-text-sm rfp-font-medium rfp-transition-all rfp-flex-shrink-0 ${activeSheet === index
+                ? 'rfp-bg-gradient-to-r rfp-from-purple-500 rfp-to-pink-500 rfp-text-white rfp-shadow-lg'
+                : 'rfp-bg-white/10 rfp-text-white hover:rfp-bg-white/20'
                 }`}
             >
               {sheet.name}
@@ -86,22 +86,22 @@ export const XlsxRenderer: React.FC<XlsxRendererProps> = ({ url }) => {
       )}
 
       {/* Table */}
-      <div className="flex-1 overflow-auto p-2 md:p-8">
-        <div className="inline-block min-w-full bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-xl rounded-xl md:rounded-2xl shadow-2xl overflow-hidden border border-white/10">
-          <table className="min-w-full divide-y divide-white/10">
-            <tbody className="divide-y divide-white/10">
+      <div className="rfp-flex-1 rfp-overflow-auto rfp-p-2 md:rfp-p-8">
+        <div className="rfp-inline-block rfp-min-w-full rfp-bg-gradient-to-br rfp-from-gray-800/90 rfp-to-gray-900/90 rfp-backdrop-blur-xl rfp-rounded-xl md:rfp-rounded-2xl rfp-shadow-2xl rfp-overflow-hidden rfp-border rfp-border-white/10">
+          <table className="rfp-min-w-full rfp-divide-y rfp-divide-white/10">
+            <tbody className="rfp-divide-y rfp-divide-white/10">
               {currentSheet?.data.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
-                  className={`transition-colors ${rowIndex === 0
-                    ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 font-semibold'
-                    : 'hover:bg-white/5'
+                  className={`rfp-transition-colors ${rowIndex === 0
+                    ? 'rfp-bg-gradient-to-r rfp-from-purple-500/20 rfp-to-pink-500/20 rfp-font-semibold'
+                    : 'hover:rfp-bg-white/5'
                     }`}
                 >
                   {(row as unknown[]).map((cell, cellIndex) => (
                     <td
                       key={cellIndex}
-                      className="px-3 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-200 border-r border-white/10"
+                      className="rfp-px-3 rfp-py-2 md:rfp-px-6 md:rfp-py-4 rfp-whitespace-nowrap rfp-text-xs md:rfp-text-sm rfp-text-gray-200 rfp-border-r rfp-border-white/10"
                     >
                       {String(cell ?? '')}
                     </td>
@@ -115,4 +115,3 @@ export const XlsxRenderer: React.FC<XlsxRendererProps> = ({ url }) => {
     </div>
   );
 };
-

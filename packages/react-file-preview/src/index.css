@@ -1,8 +1,67 @@
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* 作用域内的 Tailwind CSS 变量声明 */
+.rfp-root,
+.rfp-root *,
+.rfp-root ::before,
+.rfp-root ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x: ;
+  --tw-pan-y: ;
+  --tw-pinch-zoom: ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position: ;
+  --tw-gradient-via-position: ;
+  --tw-gradient-to-position: ;
+  --tw-ordinal: ;
+  --tw-slashed-zero: ;
+  --tw-numeric-figure: ;
+  --tw-numeric-spacing: ;
+  --tw-numeric-fraction: ;
+  --tw-ring-inset: ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur: ;
+  --tw-brightness: ;
+  --tw-contrast: ;
+  --tw-grayscale: ;
+  --tw-hue-rotate: ;
+  --tw-invert: ;
+  --tw-saturate: ;
+  --tw-sepia: ;
+  --tw-drop-shadow: ;
+  --tw-backdrop-blur: ;
+  --tw-backdrop-brightness: ;
+  --tw-backdrop-contrast: ;
+  --tw-backdrop-grayscale: ;
+  --tw-backdrop-hue-rotate: ;
+  --tw-backdrop-invert: ;
+  --tw-backdrop-opacity: ;
+  --tw-backdrop-saturate: ;
+  --tw-backdrop-sepia: ;
+  --tw-contain-size: ;
+  --tw-contain-layout: ;
+  --tw-contain-paint: ;
+  --tw-contain-style: ;
+  box-sizing: border-box;
+}
+
+/* 组件根元素基础样式 */
+.rfp-root {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,47 +69,33 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-/* 自定义滚动条样式 */
-::-webkit-scrollbar {
+/* 作用域内滚动条样式 */
+.rfp-root ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-::-webkit-scrollbar-track {
+.rfp-root ::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb {
+.rfp-root ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.rfp-root ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* PDF 渲染样式优化 - 暗黑风格 */
-.react-pdf__Page {
+/* PDF 渲染样式优化 */
+.rfp-root .react-pdf__Page {
   max-width: 100%;
-  /* box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
-  border-radius: 12px; */
   overflow: hidden;
-  /* background: linear-gradient(135deg, rgba(30, 30, 40, 0.95), rgba(20, 20, 30, 0.95));
-  backdrop-filter: blur(10px);
-  padding: 20px; */
 }
 
-.react-pdf__Page__canvas {
+.rfp-root .react-pdf__Page__canvas {
   max-width: 100%;
   height: auto !important;
   border-radius: 8px;
@@ -58,22 +103,21 @@ body {
   filter: brightness(0.95) contrast(1.05);
 }
 
-.react-pdf__Page__textContent {
+.rfp-root .react-pdf__Page__textContent {
   border-radius: 8px;
   mix-blend-mode: normal;
 }
 
-.react-pdf__Page__annotations {
+.rfp-root .react-pdf__Page__annotations {
   border-radius: 8px;
 }
 
-/* 平滑滚动 */
-.react-pdf__Document {
+.rfp-root .react-pdf__Document {
   scroll-behavior: smooth;
 }
 
 /* 音频播放器进度条样式 */
-.audio-slider {
+.rfp-root .audio-slider {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
@@ -85,23 +129,21 @@ body {
   position: relative;
 }
 
-/* 进度条轨道 */
-.audio-slider::-webkit-slider-runnable-track {
+.rfp-root .audio-slider::-webkit-slider-runnable-track {
   width: 100%;
   height: 6px;
   border-radius: 3px;
   background: transparent;
 }
 
-.audio-slider::-moz-range-track {
+.rfp-root .audio-slider::-moz-range-track {
   width: 100%;
   height: 6px;
   border-radius: 3px;
   background: transparent;
 }
 
-/* 进度条滑块 */
-.audio-slider::-webkit-slider-thumb {
+.rfp-root .audio-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 16px;
@@ -114,7 +156,7 @@ body {
   margin-top: -5px;
 }
 
-.audio-slider::-moz-range-thumb {
+.rfp-root .audio-slider::-moz-range-thumb {
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -125,28 +167,26 @@ body {
   transition: all 0.2s ease;
 }
 
-/* 滑块悬停效果 */
-.audio-slider::-webkit-slider-thumb:hover {
+.rfp-root .audio-slider::-webkit-slider-thumb:hover {
   transform: scale(1.2);
   box-shadow: 0 4px 12px rgba(168, 85, 247, 0.7);
 }
 
-.audio-slider::-moz-range-thumb:hover {
+.rfp-root .audio-slider::-moz-range-thumb:hover {
   transform: scale(1.2);
   box-shadow: 0 4px 12px rgba(168, 85, 247, 0.7);
 }
 
-/* 滑块激活效果 */
-.audio-slider::-webkit-slider-thumb:active {
+.rfp-root .audio-slider::-webkit-slider-thumb:active {
   transform: scale(1.1);
 }
 
-.audio-slider::-moz-range-thumb:active {
+.rfp-root .audio-slider::-moz-range-thumb:active {
   transform: scale(1.1);
 }
 
 /* 音量控制条样式 */
-.volume-slider {
+.rfp-root .volume-slider {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
@@ -157,21 +197,21 @@ body {
   cursor: pointer;
 }
 
-.volume-slider::-webkit-slider-runnable-track {
+.rfp-root .volume-slider::-webkit-slider-runnable-track {
   width: 100%;
   height: 4px;
   border-radius: 2px;
   background: transparent;
 }
 
-.volume-slider::-moz-range-track {
+.rfp-root .volume-slider::-moz-range-track {
   width: 100%;
   height: 4px;
   border-radius: 2px;
   background: transparent;
 }
 
-.volume-slider::-webkit-slider-thumb {
+.rfp-root .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 12px;
@@ -184,7 +224,7 @@ body {
   margin-top: -4px;
 }
 
-.volume-slider::-moz-range-thumb {
+.rfp-root .volume-slider::-moz-range-thumb {
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -195,26 +235,26 @@ body {
   transition: all 0.2s ease;
 }
 
-.volume-slider::-webkit-slider-thumb:hover {
+.rfp-root .volume-slider::-webkit-slider-thumb:hover {
   transform: scale(1.2);
   box-shadow: 0 3px 8px rgba(168, 85, 247, 0.6);
 }
 
-.volume-slider::-moz-range-thumb:hover {
+.rfp-root .volume-slider::-moz-range-thumb:hover {
   transform: scale(1.2);
   box-shadow: 0 3px 8px rgba(168, 85, 247, 0.6);
 }
 
-.pptx-preview-wrapper{
+.rfp-root .pptx-preview-wrapper {
   overflow-y: initial !important;
 }
 
 /* 隐藏滚动条样式 - 用于工具栏水平滚动 */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+.rfp-root .scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari and Opera */
+.rfp-root .scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

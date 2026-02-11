@@ -79,36 +79,36 @@ export const TextRenderer: React.FC<TextRendererProps> = ({ url, fileName }) => 
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full">
+        <div className="rfp-w-12 rfp-h-12 rfp-border-4 rfp-border-white/20 rfp-border-t-white rfp-rounded-full rfp-animate-spin" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="text-white/70 text-center">
-          <p className="text-lg">{error}</p>
+      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full">
+        <div className="rfp-text-white/70 rfp-text-center">
+          <p className="rfp-text-lg">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-full overflow-auto p-4 md:p-8">
-      <div className="max-w-full md:max-w-6xl mx-auto bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
+    <div className="rfp-w-full rfp-h-full rfp-overflow-auto rfp-p-4 md:rfp-p-8">
+      <div className="rfp-max-w-full md:rfp-max-w-6xl rfp-mx-auto rfp-bg-white/5 rfp-backdrop-blur-sm rfp-rounded-2xl rfp-border rfp-border-white/10 rfp-overflow-hidden">
         {/* 文件头部 */}
-        <div className="flex items-center gap-2 md:gap-3 px-4 py-3 md:px-6 md:py-4 bg-white/5 border-b border-white/10">
-          <FileText className="w-4 h-4 md:w-5 md:h-5 text-white/70 flex-shrink-0" />
-          <span className="text-white font-medium text-sm md:text-base truncate">{fileName}</span>
-          <span className="ml-auto text-xs text-white/50 uppercase flex-shrink-0">{language}</span>
+        <div className="rfp-flex rfp-items-center rfp-gap-2 md:rfp-gap-3 rfp-px-4 rfp-py-3 md:rfp-px-6 md:rfp-py-4 rfp-bg-white/5 rfp-border-b rfp-border-white/10">
+          <FileText className="rfp-w-4 rfp-h-4 md:rfp-w-5 md:rfp-h-5 rfp-text-white/70 rfp-flex-shrink-0" />
+          <span className="rfp-text-white rfp-font-medium rfp-text-sm md:rfp-text-base rfp-truncate">{fileName}</span>
+          <span className="rfp-ml-auto rfp-text-xs rfp-text-white/50 rfp-uppercase rfp-flex-shrink-0">{language}</span>
         </div>
 
         {/* 代码内容 */}
-        <div className="text-sm">
+        <div className="rfp-text-sm">
           {language === 'text' ? (
-            <pre className="p-6 text-white/90 font-mono whitespace-pre-wrap break-words">
+            <pre className="rfp-p-6 rfp-text-white/90 rfp-font-mono rfp-whitespace-pre-wrap rfp-break-words">
               {content}
             </pre>
           ) : (
@@ -137,4 +137,3 @@ export const TextRenderer: React.FC<TextRendererProps> = ({ url, fileName }) => 
     </div>
   );
 };
-

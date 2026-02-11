@@ -92,11 +92,11 @@ export const PdfRenderer: React.FC<PdfRendererProps> = ({
   return (
     <div
       ref={containerRef}
-      className="flex flex-col items-center w-full h-full overflow-auto py-4 md:py-8 px-2 md:px-4"
+      className="rfp-flex rfp-flex-col rfp-items-center rfp-w-full rfp-h-full rfp-overflow-auto rfp-py-4 md:rfp-py-8 rfp-px-2 md:rfp-px-4"
     >
       {error && (
-        <div className="text-white/70 text-center">
-          <p className="text-lg">{error}</p>
+        <div className="rfp-text-white/70 rfp-text-center">
+          <p className="rfp-text-lg">{error}</p>
         </div>
       )}
 
@@ -106,34 +106,34 @@ export const PdfRenderer: React.FC<PdfRendererProps> = ({
           onLoadSuccess={onDocumentLoadSuccess}
           onLoadError={onDocumentLoadError}
           loading={
-            <div className="flex items-center justify-center min-h-screen">
-              <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+            <div className="rfp-flex rfp-items-center rfp-justify-center rfp-min-h-screen">
+              <div className="rfp-w-12 rfp-h-12 rfp-border-4 rfp-border-white/20 rfp-border-t-white rfp-rounded-full rfp-animate-spin" />
             </div>
           }
         >
-          <div className="flex flex-col gap-4">
+          <div className="rfp-flex rfp-flex-col rfp-gap-4">
             {Array.from(new Array(numPages), (_, index) => {
               const pageNumber = index + 1;
               return (
                 <div
                   key={`page_${pageNumber}`}
                   ref={(el) => setPageRef(pageNumber, el)}
-                  className="relative"
+                  className="rfp-relative"
                 >
                   <Page
                     pageNumber={pageNumber}
                     scale={zoom}
                     loading={
-                      <div className="flex items-center justify-center p-8 bg-white/5 rounded-lg min-h-[600px]">
-                        <div className="w-8 h-8 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+                      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-p-8 rfp-bg-white/5 rfp-rounded-lg rfp-min-h-[600px]">
+                        <div className="rfp-w-8 rfp-h-8 rfp-border-4 rfp-border-white/20 rfp-border-t-white rfp-rounded-full rfp-animate-spin" />
                       </div>
                     }
                     renderTextLayer={true}
                     renderAnnotationLayer={true}
-                    className="shadow-2xl"
+                    className="rfp-shadow-2xl"
                   />
                   {/* 页码标签 */}
-                  <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">
+                  <div className="rfp-absolute rfp-top-2 rfp-right-2 rfp-bg-black/60 rfp-backdrop-blur-sm rfp-text-white rfp-text-xs rfp-px-3 rfp-py-1 rfp-rounded-full">
                     {pageNumber}
                   </div>
                 </div>
@@ -145,11 +145,10 @@ export const PdfRenderer: React.FC<PdfRendererProps> = ({
 
       {/* 底部页码指示器 */}
       {numPages > 0 && (
-        <div className="sticky bottom-2 md:bottom-4 mt-4 md:mt-8 bg-black/60 backdrop-blur-xl text-white px-4 py-2 md:px-6 md:py-3 rounded-full text-xs md:text-sm font-medium shadow-2xl border border-white/10">
+        <div className="rfp-sticky rfp-bottom-2 md:rfp-bottom-4 rfp-mt-4 md:rfp-mt-8 rfp-bg-black/60 rfp-backdrop-blur-xl rfp-text-white rfp-px-4 rfp-py-2 md:rfp-px-6 md:rfp-py-3 rfp-rounded-full rfp-text-xs md:rfp-text-sm rfp-font-medium rfp-shadow-2xl rfp-border rfp-border-white/10">
           第 {currentPage} 页 / 共 {numPages} 页
         </div>
       )}
     </div>
   );
 };
-

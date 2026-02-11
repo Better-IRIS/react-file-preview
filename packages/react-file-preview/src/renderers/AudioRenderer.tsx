@@ -108,37 +108,37 @@ export const AudioRenderer: React.FC<AudioRendererProps> = ({ url, fileName }) =
 
   if (error) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="text-white/70 text-center">
-          <p className="text-lg">{error}</p>
+      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full">
+        <div className="rfp-text-white/70 rfp-text-center">
+          <p className="rfp-text-lg">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full p-4 md:p-8 gap-4 md:gap-8">
+    <div className="rfp-flex rfp-flex-col rfp-items-center rfp-justify-center rfp-w-full rfp-h-full rfp-p-4 md:rfp-p-8 rfp-gap-4 md:rfp-gap-8">
       {/* 音频封面 */}
-      <div className="w-48 h-48 md:w-64 md:h-64 rounded-3xl bg-gradient-to-br from-purple-500 via-pink-500 to-rose-500 flex items-center justify-center shadow-2xl backdrop-blur-xl">
-        <Music className="w-24 h-24 md:w-32 md:h-32 text-white" />
+      <div className="rfp-w-48 rfp-h-48 md:rfp-w-64 md:rfp-h-64 rfp-rounded-3xl rfp-bg-gradient-to-br rfp-from-purple-500 rfp-via-pink-500 rfp-to-rose-500 rfp-flex rfp-items-center rfp-justify-center rfp-shadow-2xl rfp-backdrop-blur-xl">
+        <Music className="rfp-w-24 rfp-h-24 md:rfp-w-32 md:rfp-h-32 rfp-text-white" />
       </div>
 
       {/* 文件名 */}
-      <div className="text-white text-center max-w-sm md:max-w-md px-4">
-        <p className="text-xl md:text-2xl font-medium mb-1 truncate">{fileName}</p>
-        <p className="text-xs md:text-sm text-white/60">音频文件</p>
+      <div className="rfp-text-white rfp-text-center rfp-max-w-sm md:rfp-max-w-md rfp-px-4">
+        <p className="rfp-text-xl md:rfp-text-2xl rfp-font-medium rfp-mb-1 rfp-truncate">{fileName}</p>
+        <p className="rfp-text-xs md:rfp-text-sm rfp-text-white/60">音频文件</p>
       </div>
 
       {/* 播放控制器 */}
-      <div className="w-full max-w-sm md:max-w-md bg-white/10 backdrop-blur-xl rounded-2xl p-4 md:p-6 border border-white/20">
+      <div className="rfp-w-full rfp-max-w-sm md:rfp-max-w-md rfp-bg-white/10 rfp-backdrop-blur-xl rfp-rounded-2xl rfp-p-4 md:rfp-p-6 rfp-border rfp-border-white/20">
         {/* 进度条 */}
-        <div className="mb-4">
-          <div className="relative h-4 flex items-center">
+        <div className="rfp-mb-4">
+          <div className="rfp-relative rfp-h-4 rfp-flex rfp-items-center">
             {/* 进度条背景轨道 */}
-            <div className="absolute w-full h-[6px] bg-white/20 rounded-full" />
+            <div className="rfp-absolute rfp-w-full rfp-h-[6px] rfp-bg-white/20 rfp-rounded-full" />
             {/* 已播放进度覆盖层 */}
             <div
-              className="absolute h-[6px] bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-100 ease-linear pointer-events-none"
+              className="rfp-absolute rfp-h-[6px] rfp-bg-gradient-to-r rfp-from-purple-500 rfp-to-pink-500 rfp-rounded-full rfp-transition-all rfp-duration-100 rfp-ease-linear rfp-pointer-events-none"
               style={{
                 width: `${duration > 0 ? (currentTime / duration) * 100 : (currentTime > 100 ? 100 : currentTime)}%`
               }}
@@ -150,53 +150,53 @@ export const AudioRenderer: React.FC<AudioRendererProps> = ({ url, fileName }) =
               max={duration > 0 ? duration : 100 + (currentTime > 100 ? currentTime % 100 : 0)}
               value={currentTime}
               onChange={handleSeek}
-              className="audio-slider absolute w-full"
+              className="audio-slider rfp-absolute rfp-w-full"
             />
           </div>
-          <div className="flex justify-between text-xs text-white/60 mt-3">
+          <div className="rfp-flex rfp-justify-between rfp-text-xs rfp-text-white/60 rfp-mt-3">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
         </div>
 
         {/* 控制按钮 */}
-        <div className="flex items-center justify-center gap-4 mb-4">
+        <div className="rfp-flex rfp-items-center rfp-justify-center rfp-gap-4 rfp-mb-4">
           <button
             onClick={() => skip(-10)}
-            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all"
+            className="rfp-w-10 rfp-h-10 rfp-rounded-full rfp-bg-white/10 hover:rfp-bg-white/20 rfp-flex rfp-items-center rfp-justify-center rfp-text-white rfp-transition-all"
           >
-            <SkipBack className="w-5 h-5" />
+            <SkipBack className="rfp-w-5 rfp-h-5" />
           </button>
 
           <button
             onClick={togglePlay}
-            className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 hover:scale-105 flex items-center justify-center text-white transition-all shadow-lg"
+            className="rfp-w-14 rfp-h-14 rfp-rounded-full rfp-bg-gradient-to-br rfp-from-purple-500 rfp-to-pink-500 hover:rfp-scale-105 rfp-flex rfp-items-center rfp-justify-center rfp-text-white rfp-transition-all rfp-shadow-lg"
           >
-            {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
+            {isPlaying ? <Pause className="rfp-w-6 rfp-h-6" /> : <Play className="rfp-w-6 rfp-h-6 rfp-ml-1" />}
           </button>
 
           <button
             onClick={() => skip(10)}
-            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all"
+            className="rfp-w-10 rfp-h-10 rfp-rounded-full rfp-bg-white/10 hover:rfp-bg-white/20 rfp-flex rfp-items-center rfp-justify-center rfp-text-white rfp-transition-all"
           >
-            <SkipForward className="w-5 h-5" />
+            <SkipForward className="rfp-w-5 rfp-h-5" />
           </button>
         </div>
 
         {/* 音量控制 */}
-        <div className="flex items-center gap-3">
+        <div className="rfp-flex rfp-items-center rfp-gap-3">
           <button
             onClick={toggleMute}
-            className="text-white/80 hover:text-white transition-colors"
+            className="rfp-text-white/80 hover:rfp-text-white rfp-transition-colors"
           >
-            {isMuted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+            {isMuted || volume === 0 ? <VolumeX className="rfp-w-5 rfp-h-5" /> : <Volume2 className="rfp-w-5 rfp-h-5" />}
           </button>
-          <div className="flex-1 relative h-3 flex items-center">
+          <div className="rfp-flex-1 rfp-relative rfp-h-3 rfp-flex rfp-items-center">
             {/* 音量条背景轨道 */}
-            <div className="absolute w-full h-[4px] bg-white/20 rounded-full" />
+            <div className="rfp-absolute rfp-w-full rfp-h-[4px] rfp-bg-white/20 rfp-rounded-full" />
             {/* 音量覆盖层 */}
             <div
-              className="absolute h-[4px] bg-purple-500 rounded-full transition-all duration-100 pointer-events-none"
+              className="rfp-absolute rfp-h-[4px] rfp-bg-purple-500 rfp-rounded-full rfp-transition-all rfp-duration-100 rfp-pointer-events-none"
               style={{
                 width: `${(isMuted ? 0 : volume) * 100}%`
               }}
@@ -209,7 +209,7 @@ export const AudioRenderer: React.FC<AudioRendererProps> = ({ url, fileName }) =
               step="0.01"
               value={isMuted ? 0 : volume}
               onChange={handleVolumeChange}
-              className="volume-slider absolute w-full"
+              className="volume-slider rfp-absolute rfp-w-full"
             />
           </div>
         </div>
@@ -220,9 +220,8 @@ export const AudioRenderer: React.FC<AudioRendererProps> = ({ url, fileName }) =
         ref={audioRef}
         src={url}
         onError={handleError}
-        className="hidden"
+        className="rfp-hidden"
       />
     </div>
   );
 };
-

@@ -38,26 +38,26 @@ export const DocxRenderer: React.FC<DocxRendererProps> = ({ url }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full">
+        <div className="rfp-w-12 rfp-h-12 rfp-border-4 rfp-border-white/20 rfp-border-t-white rfp-rounded-full rfp-animate-spin" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="text-white/70 text-center">
-          <p className="text-lg">{error}</p>
+      <div className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full">
+        <div className="rfp-text-white/70 rfp-text-center">
+          <p className="rfp-text-lg">{error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-full overflow-auto p-4 md:p-8">
+    <div className="rfp-w-full rfp-h-full rfp-overflow-auto rfp-p-4 md:rfp-p-8">
       <div
-        className="max-w-full md:max-w-4xl mx-auto bg-white rounded-lg shadow-2xl p-6 md:p-12"
+        className="rfp-max-w-full md:rfp-max-w-4xl rfp-mx-auto rfp-bg-white rfp-rounded-lg rfp-shadow-2xl rfp-p-6 md:rfp-p-12"
         dangerouslySetInnerHTML={{ __html: html }}
         style={{
           fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -68,4 +68,3 @@ export const DocxRenderer: React.FC<DocxRendererProps> = ({ url }) => {
     </div>
   );
 };
-

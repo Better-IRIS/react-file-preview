@@ -92,7 +92,7 @@ export const ImageRenderer: React.FC<ImageRendererProps> = ({
   return (
     <div
       ref={containerRef}
-      className="flex items-center justify-center w-full h-full overflow-hidden"
+      className="rfp-flex rfp-items-center rfp-justify-center rfp-w-full rfp-h-full rfp-overflow-hidden"
       onWheel={handleWheel}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -101,21 +101,21 @@ export const ImageRenderer: React.FC<ImageRendererProps> = ({
       style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
     >
       {!loaded && !error && (
-        <div className="flex items-center justify-center">
-          <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
+        <div className="rfp-flex rfp-items-center rfp-justify-center">
+          <div className="rfp-w-12 rfp-h-12 rfp-border-4 rfp-border-white/20 rfp-border-t-white rfp-rounded-full rfp-animate-spin" />
         </div>
       )}
 
       {error && (
-        <div className="text-white/70 text-center">
-          <p className="text-lg">{error}</p>
+        <div className="rfp-text-white/70 rfp-text-center">
+          <p className="rfp-text-lg">{error}</p>
         </div>
       )}
 
       <motion.img
         src={url}
         alt="Preview"
-        className={`max-w-none select-none ${!loaded ? 'hidden' : ''}`}
+        className={`rfp-max-w-none rfp-select-none ${!loaded ? 'rfp-hidden' : ''}`}
         style={{
           transform: `translate(${position.x}px, ${position.y}px) scale(${internalZoom}) rotate(${rotation}deg)`,
           transformOrigin: 'center',
@@ -132,4 +132,3 @@ export const ImageRenderer: React.FC<ImageRendererProps> = ({
     </div>
   );
 };
-
